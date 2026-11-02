@@ -20,11 +20,19 @@ final class DuplicatesModel {
     var expandedTrees: Set<String> = []
     /// 다른 화면에서 파일이 바뀌어 결과가 낡음 — 이 화면으로 돌아오면 다시 찾는다
     var isStale = false
+    /// 폴더를 훑는 중에 '찾기'를 누름 — 반쯤 쌓인 인덱스로 '중복 없음'을 보여 주지 않도록 스캔이 끝난 뒤에 찾는다
+    var waitingForScan = false
 
     init(app: AppModel) { self.app = app }
 
     func run() {
         guard !running else { return }
+        if app.isScanning {
+            waitingForScan = true
+            progress = String(localized: "폴더 스캔 중…")
+            return
+        }
+        waitingForScan = false
         running = true
         isStale = false
         progress = String(localized: "크기가 같은 파일 찾는 중…")
@@ -63,6 +71,11 @@ final class DuplicatesModel {
                 }
             }
         }
+    }
+
+    /// 모든 폴더 스캔이 끝났을 때 (AppModel이 부른다)
+    func resumeAfterScan() {
+        if waitingForScan { run() }
     }
 
     // MARK: - 선택 도우미

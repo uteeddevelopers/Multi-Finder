@@ -113,7 +113,9 @@ final class AppModel {
     var categories: CategoriesModel { categoriesStorage! }
     var leftovers: LeftoversModel { leftoversStorage! }
 
-    var isScanning: Bool { !scanning.isEmpty }
+    /// 실행 직후 첫 스캔을 시작하기 전(제외 대상 정리 중)도 '스캔 중'으로 본다 — 그사이 찾기를 눌러도 빈 인덱스로 답하지 않게
+    var startupPending = true
+    var isScanning: Bool { startupPending || !scanning.isEmpty }
     var isSearching: Bool { !filter.text.isEmpty }
 
     // MARK: - 생성
@@ -151,7 +153,12 @@ final class AppModel {
         let store = self.store, rules = self.rules
         Task.detached(priority: .utility) { [weak self] in
             _ = try? store.removeExcluded(by: rules)
-            await MainActor.run { [weak self] in self?.rescanAll() }
+            await MainActor.run { [weak self] in
+                guard let self else { return }
+                self.startupPending = false
+                self.rescanAll()
+                if self.scanning.isEmpty { self.duplicates.resumeAfterScan() }   // 모은 폴더가 없으면 기다릴 스캔도 없다
+            }
         }
     }
 
@@ -439,6 +446,7 @@ final class AppModel {
                 if self.scanning.isEmpty { self.progressText = "" }
                 self.invalidate()
                 if let result { self.showError(message: result) }
+                if self.scanning.isEmpty { self.duplicates.resumeAfterScan() }
             }
         }
     }

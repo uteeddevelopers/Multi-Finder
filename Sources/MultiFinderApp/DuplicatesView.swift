@@ -8,7 +8,7 @@ struct DuplicatesView: View {
     var body: some View {
         @Bindable var dup = app.duplicates
         VStack(spacing: 0) {
-            if dup.running {
+            if dup.running || dup.waitingForScan {
                 VStack(spacing: 10) {
                     ProgressView()
                     Text(dup.progress).foregroundStyle(.secondary)
@@ -69,7 +69,7 @@ struct DuplicatesView: View {
                 Label("옵션", systemImage: "slider.horizontal.3")
             }
             Button(dup.report == nil ? "찾기" : "다시 찾기") { dup.run() }
-                .disabled(dup.running)
+                .disabled(dup.running || dup.waitingForScan)
                 .help("현재 범위·크기 조건으로 중복 찾기")
         }
     }
