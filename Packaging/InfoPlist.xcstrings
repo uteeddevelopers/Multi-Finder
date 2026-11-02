@@ -1,0 +1,156 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "NSDesktopFolderUsageDescription": {
+      "comment": "Privacy prompt explanation",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Multi-Finder shows, compares and tidies the files in the folders you add. Nothing leaves your Mac."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Multi-Finder は、追加したフォルダ内のファイルを表示・比較・整理するために使用します。ファイルがこの Mac の外に送られることはありません。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Multi-Finder가 추가한 폴더의 파일을 보여 주고, 비교하고, 정리하는 데 씁니다. 파일은 이 Mac 밖으로 나가지 않습니다."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Multi-Finder 用于显示、比较和整理你添加的文件夹中的文件。文件不会离开这台 Mac。"
+          }
+        }
+      }
+    },
+    "NSDocumentsFolderUsageDescription": {
+      "comment": "Privacy prompt explanation",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Multi-Finder shows, compares and tidies the files in the folders you add. Nothing leaves your Mac."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Multi-Finder は、追加したフォルダ内のファイルを表示・比較・整理するために使用します。ファイルがこの Mac の外に送られることはありません。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Multi-Finder가 추가한 폴더의 파일을 보여 주고, 비교하고, 정리하는 데 씁니다. 파일은 이 Mac 밖으로 나가지 않습니다."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Multi-Finder 用于显示、比较和整理你添加的文件夹中的文件。文件不会离开这台 Mac。"
+          }
+        }
+      }
+    },
+    "NSDownloadsFolderUsageDescription": {
+      "comment": "Privacy prompt explanation",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Multi-Finder shows, compares and tidies the files in the folders you add. Nothing leaves your Mac."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Multi-Finder は、追加したフォルダ内のファイルを表示・比較・整理するために使用します。ファイルがこの Mac の外に送られることはありません。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Multi-Finder가 추가한 폴더의 파일을 보여 주고, 비교하고, 정리하는 데 씁니다. 파일은 이 Mac 밖으로 나가지 않습니다."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Multi-Finder 用于显示、比较和整理你添加的文件夹中的文件。文件不会离开这台 Mac。"
+          }
+        }
+      }
+    },
+    "NSNetworkVolumesUsageDescription": {
+      "comment": "Privacy prompt explanation",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Multi-Finder shows, compares and tidies the files in the folders you add. Nothing leaves your Mac."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Multi-Finder は、追加したフォルダ内のファイルを表示・比較・整理するために使用します。ファイルがこの Mac の外に送られることはありません。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Multi-Finder가 추가한 폴더의 파일을 보여 주고, 비교하고, 정리하는 데 씁니다. 파일은 이 Mac 밖으로 나가지 않습니다."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Multi-Finder 用于显示、比较和整理你添加的文件夹中的文件。文件不会离开这台 Mac。"
+          }
+        }
+      }
+    },
+    "NSRemovableVolumesUsageDescription": {
+      "comment": "Privacy prompt explanation",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Multi-Finder shows, compares and tidies the files in the folders you add. Nothing leaves your Mac."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Multi-Finder は、追加したフォルダ内のファイルを表示・比較・整理するために使用します。ファイルがこの Mac の外に送られることはありません。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Multi-Finder가 추가한 폴더의 파일을 보여 주고, 비교하고, 정리하는 데 씁니다. 파일은 이 Mac 밖으로 나가지 않습니다."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Multi-Finder 用于显示、比较和整理你添加的文件夹中的文件。文件不会离开这台 Mac。"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

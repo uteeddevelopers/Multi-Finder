@@ -1,0 +1,44 @@
+Multi-Finder {VERSION} — © 2026 Taeho Lim
+
+━━ English ━━
+1. Drag Multi-Finder into the Applications folder.
+2. Open it. Because this is a free indie app that isn't notarized by Apple, macOS says it
+   "could not verify" the app. Click Done.
+3. Open System Settings › Privacy & Security, scroll down, and click "Open Anyway" next to
+   "Multi-Finder was blocked". Confirm with your password. You only do this once.
+Optional: to remove leftovers inside other apps' data folders, or to undo a Move to Trash
+with ⌘Z, turn on Multi-Finder in System Settings › Privacy & Security › Full Disk Access.
+Requires macOS 14 or later. Categories (on-device AI) needs macOS 26 with Apple Intelligence.
+Nothing is ever deleted outright: files only go to the Trash, after you confirm.
+
+━━ 한국어 ━━
+1. Multi-Finder를 응용 프로그램(Applications) 폴더로 끌어다 놓으세요.
+2. 실행하면, 애플 공증을 받지 않은 무료 개인 개발 앱이라 macOS가 "확인할 수 없음"이라고
+   안내합니다. '완료'를 누르세요.
+3. 시스템 설정 › 개인정보 보호 및 보안에서 아래로 내려, Multi-Finder가 차단되었다는 안내 옆의
+   '확인 없이 열기'를 누르고 암호로 확인하세요. 처음 한 번만 하면 됩니다.
+선택: 다른 앱 데이터 폴더 안의 잔여물을 지우거나 휴지통 이동을 ⌘Z로 되돌리려면
+시스템 설정 › 개인정보 보호 및 보안 › 전체 디스크 접근에서 Multi-Finder를 켜세요.
+macOS 14 이상. 자동 분류(온디바이스 AI)는 macOS 26 + Apple Intelligence가 필요합니다.
+파일을 바로 지우는 일은 없습니다. 확인을 거친 뒤 휴지통으로만 옮깁니다.
+
+━━ 日本語 ━━
+1. Multi-Finder を「アプリケーション」フォルダにドラッグします。
+2. 開くと、Apple の公証を受けていない無料の個人開発アプリのため、macOS が「確認できません」と
+   表示します。「完了」をクリックしてください。
+3. システム設定 › プライバシーとセキュリティ を下までスクロールし、Multi-Finder がブロックされたという
+   メッセージの横の「このまま開く」をクリックしてパスワードで確認します。最初の 1 回だけです。
+任意: 別のアプリのデータフォルダ内の残りファイルを削除したり、ゴミ箱への移動を ⌘Z で取り消したり
+するには、システム設定 › プライバシーとセキュリティ › フルディスクアクセス で Multi-Finder をオンにします。
+macOS 14 以降。自動分類（オンデバイス AI）には macOS 26 と Apple Intelligence が必要です。
+ファイルをいきなり削除することはありません。確認のうえ、ゴミ箱に入れるだけです。
+
+━━ 简体中文 ━━
+1. 将 Multi-Finder 拖到“应用程序”文件夹。
+2. 打开时，由于这是未经 Apple 公证的免费个人开发应用，macOS 会提示“无法验证”。点按“完成”。
+3. 打开 系统设置 › 隐私与安全性，向下滚动，在有关 Multi-Finder 已被阻止的提示旁点按“仍要打开”，
+   并输入密码确认。只需操作一次。
+可选：若要删除其他应用数据文件夹中的残留，或用 ⌘Z 撤销移到废纸篓，请在
+系统设置 › 隐私与安全性 › 完全磁盘访问权限 中打开 Multi-Finder。
+需要 macOS 14 或更高版本。自动分类（设备端 AI）需要 macOS 26 和 Apple 智能。
+不会直接删除任何文件：确认后只会移到废纸篓。
