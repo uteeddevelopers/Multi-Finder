@@ -85,7 +85,15 @@ impl PathStyle {
     }
 
     /// Remove trailing separators, keeping roots (`/`, `C:\`). `C:` becomes `C:\`.
+    /// Windows style also turns `/` into `\` (Windows accepts both; the index stores `\` only).
     pub fn trim(&self, p: &str) -> String {
+        let converted;
+        let p = if self.sep == '\\' && p.contains('/') {
+            converted = p.replace('/', "\\");
+            converted.as_str()
+        } else {
+            p
+        };
         if is_bare_drive(p) {
             return format!("{p}{}", self.sep);
         }
@@ -469,5 +477,20 @@ mod tests {
         let diff = today - week;
         // 6 days, ± one hour for daylight-saving changes
         assert!((diff - 6 * 86_400_000).abs() <= 3_600_000, "{diff}");
+    }
+}
+
+#[cfg(test)]
+mod separator_tests {
+    use super::PathStyle;
+
+    #[test]
+    fn windows_style_accepts_forward_slashes() {
+        let w = PathStyle::WINDOWS;
+        assert_eq!(w.trim(r"C:\Users\me/Downloads/a.txt"), r"C:\Users\me\Downloads\a.txt");
+        assert_eq!(w.trim("C:/"), r"C:\");
+        assert_eq!(w.trim(r"C:\data\"), r"C:\data");
+        // UNIX style leaves backslashes alone (they are ordinary name characters there)
+        assert_eq!(PathStyle::UNIX.trim(r"/tmp/a\b/"), r"/tmp/a\b");
     }
 }

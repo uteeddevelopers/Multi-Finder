@@ -410,6 +410,7 @@ impl IndexStore {
 
     /// Remove a path and everything below it (index rows and classifications). Returns rows deleted.
     pub fn remove(&self, path: &str) -> Result<usize> {
+        let path = &self.style.trim(path);
         let (lo, hi) = self.range(path);
         let c = self.conn();
         let n = c.execute(
@@ -425,6 +426,7 @@ impl IndexStore {
 
     /// Reflect a move: rewrite the path prefix of the item and its children.
     pub fn rename(&self, old: &str, new: &str) -> Result<()> {
+        let (old, new) = (&self.style.trim(old), &self.style.trim(new));
         let style = self.style;
         let mut c = self.conn();
         let tx = c.transaction_with_behavior(TransactionBehavior::Immediate)?;
@@ -497,6 +499,7 @@ impl IndexStore {
     // ───────────── reads ─────────────
 
     pub fn record(&self, path: &str) -> Result<Option<FileRecord>> {
+        let path = &self.style.trim(path);
         let c = self.conn();
         Ok(c.query_row(
             &format!("SELECT {COLUMNS} FROM files WHERE path = ?1"),
@@ -507,6 +510,7 @@ impl IndexStore {
     }
 
     pub fn is_indexed(&self, path: &str) -> Result<bool> {
+        let path = &self.style.trim(path);
         let c = self.conn();
         Ok(
             c.query_row("SELECT 1 FROM files WHERE path = ?1", [path], |_| Ok(()))
@@ -517,6 +521,7 @@ impl IndexStore {
 
     /// Direct children (folders first, then name).
     pub fn children(&self, parent: &str) -> Result<Vec<FileRecord>> {
+        let parent = &self.style.trim(parent);
         let c = self.conn();
         let mut st = c.prepare_cached(&format!(
             "SELECT {COLUMNS} FROM files WHERE parent = ?1 ORDER BY kind = 1 DESC, name_key"
@@ -550,6 +555,7 @@ impl IndexStore {
 
     /// Every regular file under `prefix` (recursive), by path.
     pub fn files_under(&self, prefix: &str) -> Result<Vec<FileRecord>> {
+        let prefix = &self.style.trim(prefix);
         let (lo, hi) = self.range(prefix);
         let c = self.conn();
         let mut st = c.prepare(&format!(
@@ -582,6 +588,7 @@ impl IndexStore {
 
     /// Recursive file count and bytes under a folder.
     pub fn summary(&self, path: &str) -> Result<(u64, u64)> {
+        let path = &self.style.trim(path);
         let (lo, hi) = self.range(path);
         let c = self.conn();
         let (n, b): (i64, i64) = c.query_row(
@@ -595,7 +602,9 @@ impl IndexStore {
     /// `dir_info` command: direct child count + recursive bytes for each folder.
     pub fn dir_info(&self, paths: &[String]) -> Result<Vec<DirInfo>> {
         let mut out = Vec::with_capacity(paths.len());
-        for p in paths {
+        for orig in paths {
+            let key = self.style.trim(orig);
+            let p = &key;
             let items: i64 = {
                 let c = self.conn();
                 c.query_row("SELECT COUNT(*) FROM files WHERE parent = ?1", [p], |r| {
@@ -603,7 +612,7 @@ impl IndexStore {
                 })?
             };
             out.push(DirInfo {
-                path: p.clone(),
+                path: orig.clone(), // the caller's spelling — the UI matches rows by it
                 items: items.max(0) as u64,
                 bytes: self.bytes_under(p)?,
             });
