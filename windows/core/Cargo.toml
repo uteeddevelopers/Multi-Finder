@@ -1,0 +1,51 @@
+[package]
+name = "mf-core"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.95"
+license = "GPL-3.0-only"
+description = "Multi-Finder core logic: index, scanner, watcher, duplicates, compare, executor, categories, leftovers"
+publish = false
+
+[features]
+default = []
+# Local LLM (llama.cpp via llama-cpp-2, CPU only)
+llm = ["dep:llama-cpp-2", "dep:num_cpus"]
+# Windows.Media.Ocr text extraction for images (Windows only; no-op elsewhere)
+ocr = ["dep:windows"]
+
+[dependencies]
+anyhow = "1.0.104"
+thiserror = "2.0.21"
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = "1.0.154"
+rusqlite = { version = "0.41.1", features = ["bundled"] }
+walkdir = "2.5.0"
+notify = "8.2.1"
+blake3 = "1.8.7"
+sha2 = "0.10.9"
+unicode-normalization = "0.1.26"
+dunce = "1.0.5"
+trash = "5.2.9"
+encoding_rs = "0.8.44"
+pdf-extract = "0.12.1"
+zip = { version = "9.2.2", default-features = false, features = ["deflate-flate2-zlib-rs"] }
+quick-xml = "0.42.0"
+ureq = { version = "3.5.1", default-features = false, features = ["rustls"] }
+chrono = { version = "0.4.45", default-features = false, features = ["clock", "std"] }
+sysinfo = { version = "0.40.1", default-features = false, features = ["system"] }
+llama-cpp-2 = { version = "0.1.160", default-features = false, optional = true }
+num_cpus = { version = "1.17.0", optional = true }
+
+[target.'cfg(unix)'.dependencies]
+libc = "0.2.191"
+
+[target.'cfg(windows)'.dependencies]
+winreg = "0.56.0"
+windows-sys = { version = "0.61.2", features = ["Win32_Foundation", "Win32_Storage_FileSystem"] }
+windows = { version = "0.62.2", optional = true, features = ["Foundation", "Foundation_Collections", "Globalization", "Graphics_Imaging", "Media_Ocr", "Storage", "Storage_Streams", "Win32_System_Com"] }
+
+[dev-dependencies]
+tempfile = "3.27.0"
+tiny_http = "0.12.0"
+filetime = "0.2.29"

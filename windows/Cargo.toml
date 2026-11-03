@@ -1,0 +1,10 @@
+[workspace]
+members = ["core", "src-tauri"]
+resolver = "2"
+
+[profile.release]
+# 휴지통(trash 크레이트)의 COM 초기화 실패를 catch_unwind로 잡으므로 panic = "unwind"를 유지한다
+panic = "unwind"
+strip = true
+lto = "thin"
+codegen-units = 4

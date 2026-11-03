@@ -1,0 +1,98 @@
+name: Windows
+
+on:
+  push:
+    branches: [windows]
+    paths: ["windows/**", ".github/workflows/windows.yml"]
+  workflow_dispatch:
+    inputs:
+      model_test:
+        description: "Download the AI model and test classification"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+# The AI-model test (≈800 MB download) runs when dispatched with model_test, or when the pushed
+# commit message contains "[model]".
+jobs:
+  build:
+    runs-on: windows-latest
+    env:
+      MODEL_TEST: ${{ inputs.model_test == true || contains(github.event.head_commit.message, '[model]') }}
+    timeout-minutes: 90
+    defaults:
+      run:
+        working-directory: windows
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: windows/package-lock.json
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: "windows -> target"
+
+      - name: Install frontend
+        run: npm ci
+
+      - name: Core tests
+        run: cargo test -p mf-core --release
+
+      - name: Build app and installer
+        run: npx tauri build
+
+      - name: List DLL imports (must not need the VC++ redistributable)
+        shell: pwsh
+        continue-on-error: true
+        run: |
+          $ro = Get-Command llvm-readobj -ErrorAction SilentlyContinue
+          if (-not $ro) { $ro = Get-Item "C:\Program Files\LLVM\bin\llvm-readobj.exe" -ErrorAction SilentlyContinue }
+          & $ro --coff-imports target\release\multi-finder.exe | Select-String "Name: " | Sort-Object -Unique
+          Get-ChildItem target\release\multi-finder.exe, target\release\bundle\nsis\*.exe | Format-Table Name, Length
+
+      - name: Download AI model
+        if: env.MODEL_TEST == 'true'
+        shell: pwsh
+        run: |
+          $url = "https://huggingface.co/ggml-org/Qwen3-0.6B-GGUF/resolve/13ac06624948e4d8589cb4b6f90100837342fcb8/Qwen3-0.6B-Q8_0.gguf"
+          $file = Join-Path $env:RUNNER_TEMP "Qwen3-0.6B-Q8_0.gguf"
+          Invoke-WebRequest -Uri $url -OutFile $file
+          $hash = (Get-FileHash $file -Algorithm SHA256).Hash.ToLower()
+          if ($hash -ne "361cc68159042c36ebff7715dc5a2e4612153e88f3e9c9c234820849d6dc9e1d") { throw "model hash mismatch: $hash" }
+          "MF_MODEL_FILE=$file" | Out-File -FilePath $env:GITHUB_ENV -Append
+          "MF_TEST_MODEL=$file" | Out-File -FilePath $env:GITHUB_ENV -Append
+
+      - name: Real model tests
+        if: env.MODEL_TEST == 'true'
+        run: cargo test -p mf-core --release --features llm -- --ignored --nocapture
+
+      - name: Smoke test (screenshots)
+        shell: pwsh
+        run: |
+          if ($env:MODEL_TEST -eq "true") { ./tools/smoke.ps1 -WithModel } else { ./tools/smoke.ps1 }
+
+      - name: Upload app
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: multi-finder-windows
+          path: |
+            windows/target/release/multi-finder.exe
+            windows/target/release/bundle/nsis/*.exe
+          if-no-files-found: warn
+
+      - name: Upload smoke results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke
+          path: windows/smoke/
+          if-no-files-found: warn
