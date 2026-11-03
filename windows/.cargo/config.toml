@@ -1,7 +1,9 @@
-# 윈도우: C 런타임을 모두 정적으로 묶는다 — VC++ 재배포 패키지(vcruntime140·msvcp140)가 없는 PC에서도 바로 실행되게.
-# llama.cpp(C++)도 같은 런타임(/MT)으로 빌드해야 링크가 맞는다.
+# 윈도우: C/C++ 런타임을 모두 정적으로 묶는다 — VC++ 재배포 패키지(vcruntime140·msvcp140)가 없는 PC에서도 바로 실행되게.
+# llama.cpp(C++)도 같은 런타임(/MT)으로 빌드해야 링크가 맞는다. llama-cpp-sys-2는 CMAKE_* 환경 변수를 CMake 정의로 넘기고,
+# CMake 3.15+는 CMAKE_MSVC_RUNTIME_LIBRARY를 따르므로(기본값은 /MD) 여기서 MultiThreaded(/MT)로 못박는다.
 [target.'cfg(all(windows, target_env = "msvc"))']
 rustflags = ["-C", "target-feature=+crt-static"]
 
 [env]
 LLAMA_STATIC_CRT = "1"
+CMAKE_MSVC_RUNTIME_LIBRARY = "MultiThreaded"
